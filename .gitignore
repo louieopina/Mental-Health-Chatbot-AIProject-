@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Data and models (exclude large files; include small samples if needed)
+data/
+models/
+
+# Logs
+logs/
+
+# Environment files
+.env
+*.env
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode settings
+.vscode/
+
+# MacOS system files
+.AppleDouble
+.LSOverride 
