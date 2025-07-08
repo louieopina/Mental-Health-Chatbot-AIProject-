@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Chatbot</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f4f6fb 100%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #1a1a1a;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(80,120,200,0.13);
+            padding: 38px 36px 28px 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #0a3d62;
+            font-size: 2.5em;
+            margin-bottom: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .chat {
+            width: 100%;
+            max-height: 420px;
+            min-height: 220px;
+            overflow-y: auto;
+            margin-bottom: 24px;
+            padding: 18px 12px 18px 0;
+            background: #f0f4f8;
+            border-radius: 16px;
+            border: 2px solid #b0bec5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .message {
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .message.user {
+            align-items: flex-end;
+        }
+        .message.bot {
+            align-items: flex-start;
+        }
+        .bubble {
+            padding: 16px 22px;
+            border-radius: 18px 18px 6px 18px;
+            max-width: 80%;
+            font-size: 1.15em;
+            line-height: 1.6;
+            word-break: break-word;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 2px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .user .bubble {
+            background: #1976d2;
+            color: #fff;
+            border: 2px solid #115293;
+            border-radius: 18px 6px 18px 18px;
+        }
+        .bot .bubble {
+            background: #fffde7;
+            color: #222;
+            border: 2px solid #fbc02d;
+            border-radius: 6px 18px 18px 18px;
+        }
+        #typing {
+            color: #888;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            text-align: left;
+            width: 100%;
+        }
+        .input-row {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            margin-bottom: 0;
+            align-items: center;
+        }
+        #userInput {
+            flex: 1;
+            width: 100%;
+            padding: 16px 18px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            border: 2px solid #b0bec5;
+            outline: none;
+            background: #f9fafb;
+            color: #1a1a1a;
+            transition: border 0.2s;
+        }
+        #userInput:focus {
+            border-color: #1976d2;
+        }
+        #sendBtn {
+            padding: 16px 32px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            background: #1976d2;
+            color: #fff;
+            border: 2px solid #115293;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            margin-left: 0;
+        }
+        #sendBtn:hover {
+            background: #115293;
+        }
+        #clearBtn {
+            width: 100%;
+            padding: 16px 0;
+            font-size: 1.1em;
+            border-radius: 10px;
+            background: #fffde7;
+            color: #222;
+            border: 2px solid #fbc02d;
+            margin-top: 18px;
+            margin-bottom: 0;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        #clearBtn:hover {
+            background: #fbc02d;
+            color: #fff;
+        }
+        .disclaimer {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+        .disclaimer a {
+            color: #357ab8;
+            text-decoration: underline;
+        }
+        @media (max-width: 800px) {
+            .container {
+                width: 98vw;
+                padding: 8px;
+            }
+            .chat {
+                min-height: 120px;
+                max-height: 220px;
+            }
+            #userInput {
+                width: 60vw;
+            }
+            .input-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+            #sendBtn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mental Health Chatbot</h1>
+        <div class="disclaimer">
+            This is not a substitute for professional help. For emergencies, contact <a href="tel:116123">116 123 (Samaritans, UK, free 24/7)</a>.
+        </div>
+        <div class="chat" id="chat"></div>
+        <div id="typing" style="display:none;">Bot is typing...</div>
+        <div class="input-row">
+            <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off" />
+            <button id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+        <button id="clearBtn">Clear Chat</button>
+    </div>
+    <script>
+        function appendMessage(sender, text) {
+            const chat = document.getElementById('chat');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message ' + sender;
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.textContent = text;
+            msgDiv.appendChild(bubble);
+            chat.appendChild(msgDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (!text) return;
+            appendMessage('user', text);
+            input.value = '';
+            document.getElementById('typing').style.display = 'block';
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            })
+            .then(res => res.json())
+            .then(data => {
+                setTimeout(() => {
+                    document.getElementById('typing').style.display = 'none';
+                    appendMessage('bot', data.response);
+                }, 1200);
+            })
+            .catch(() => {
+                document.getElementById('typing').style.display = 'none';
+                appendMessage('bot', 'Sorry, there was an error.');
+            });
+        }
+        document.getElementById('userInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+        // Clear chat button logic
+        document.getElementById('clearBtn').onclick = function() {
+            fetch('/clear_chat', {method: 'POST'}).then(() => {
+                document.getElementById('chat').innerHTML = '';
+            });
+        };
+    </script>
+</body>
+</html> 
