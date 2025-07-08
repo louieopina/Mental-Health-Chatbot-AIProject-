@@ -82,7 +82,6 @@ These datasets were combined, cleaned, and balanced to create the training and e
 - The system is evaluated using accuracy, precision, recall, F1-score, and per-class metrics.
 - **Intent Classifier (DistilBERT):**
   - Best Evaluation Accuracy: **0.91** (91%)
-  - F1-score: *Not available or not reported in current logs*
 - Visualisations are available in the `figures/` directory and referenced in the technical report.
 
 ## Ethical Considerations
