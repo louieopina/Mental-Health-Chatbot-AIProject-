@@ -61,8 +61,28 @@ ProjectAI/
 - Interact with the chatbot via the web interface.
 - For testing and evaluation, use the provided test prompts and scripts.
 
+## Datasets
+This project uses two primary datasets for training and evaluation:
+
+- **MentalChat16K** ([ShenLab/MentalChat16K](https://huggingface.co/datasets/ShenLab/MentalChat16K))
+  - 16,000 conversations
+  - Multiple mental health domains
+  - Professional annotations
+  - Quality-controlled responses
+
+- **Heliosbrahma Mental Health Chatbot Dataset** ([heliosbrahma/mental_health_chatbot_dataset](https://huggingface.co/datasets/heliosbrahma/mental_health_chatbot_dataset))
+  - 10,000 conversations
+  - Diverse user intents
+  - Emotional context labels
+  - Response quality metrics
+
+These datasets were combined, cleaned, and balanced to create the training and evaluation sets for both intent classification and response generation.
+
 ## Evaluation
 - The system is evaluated using accuracy, precision, recall, F1-score, and per-class metrics.
+- **Intent Classifier (DistilBERT):**
+  - Best Evaluation Accuracy: **0.91** (91%)
+  - F1-score: *Not available or not reported in current logs*
 - Visualisations are available in the `figures/` directory and referenced in the technical report.
 
 ## Ethical Considerations
